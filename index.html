@@ -1,1 +1,105 @@
-<h1>hello world!</h1>
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Redirect :)</title>
+    <script>
+      // var xhr = new XMLHttpRequest();
+      // xhr.open('GET', "https://www.dvz.de/rubriken/digitalisierung/detail/news/das-start-up-aus-der-speicherstadt.html", true);
+      // xhr.setRequestHeader("Referer", "https://www.google.de");
+      // xhr.setRequestHeader("Access-Control-Allow-Credentials", true);
+      // xhr.setRequestHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+      // xhr.withCredentials = true;
+      // xhr.send();
+ 
+      // xhr.onreadystatechange = processRequest;
+
+      // function processRequest(e) {
+      //   if (xhr.readyState == 4 && xhr.status == 200) {
+      //     var response = JSON.parse(xhr.responseText);
+      //     console.log(response);
+      //   }
+      // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      // Create the XHR object.
+      function createCORSRequest(method, url) {
+        var xhr = new XMLHttpRequest();
+        if ("withCredentials" in xhr) {
+          // XHR for Chrome/Firefox/Opera/Safari.
+          xhr.open(method, url, true);
+        } else if (typeof XDomainRequest != "undefined") {
+          // XDomainRequest for IE.
+          xhr = new XDomainRequest();
+          xhr.open(method, url);
+        } else {
+          // CORS not supported.
+          xhr = null;
+        }
+        return xhr;
+      }
+
+      // Helper method to parse the title tag from the response.
+      function getTitle(text) {
+        return text.match('<title>(.*)?</title>')[1];
+      }
+
+      // Make the actual CORS request.
+      function makeCorsRequest() {
+        // This is a sample server that supports CORS.
+        var url = 'http://html5rocks-cors.s3-website-us-east-1.amazonaws.com/index.html';
+
+        var xhr = createCORSRequest('GET', url);
+        if (!xhr) {
+          alert('CORS not supported');
+          return;
+        }
+
+        // Response handlers.
+        xhr.onload = function() {
+          var text = xhr.responseText;
+          var title = getTitle(text);
+          alert('Response from CORS request to ' + url + ': ' + title);
+        };
+
+        xhr.onerror = function() {
+          alert('Woops, there was an error making the request.');
+        };
+
+        xhr.send();
+      }
+
+      var url = 'http://api.alice.com/cors';
+      var xhr = createCORSRequest('PUT', url);
+      xhr.setRequestHeader("Referer", "https://www.google.de");
+      xhr.send();
+
+      xhr.onreadystatechange = processRequest;
+
+      function processRequest(e) {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          var response = JSON.parse(xhr.responseText);
+          console.log(response);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h3>Redirecting...</h3>
+  </body>
+</html>
